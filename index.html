@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Layout</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      width: 250px;
+      background-color: #f8f8f8;
+      border-right: 1px solid #ddd;
+      position: fixed;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+
+    .sidebar h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .sidebar a {
+      display: block;
+      text-decoration: none;
+      color: #555;
+      padding: 8px;
+      margin: 4px 0;
+      font-family: 'Roboto', sans-serif;
+      font-weight: bold;
+    }
+
+    .sidebar a:hover {
+      background-color: #ddd;
+    }
+
+    .sidebar .bottom-links {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+    }
+
+    .sidebar .bottom-links a {
+      display: block;
+      margin: 8px 0;
+      font-size: 18px;
+    }
+
+    /* Main Content */
+    .main {
+      margin-left: 250px;
+      padding: 16px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 8px;
+    }
+
+    header .left {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    header .right i {
+      font-size: 24px;
+      margin-left: 16px;
+      cursor: pointer;
+    }
+
+    .main-image {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .main-image img {
+      width: 100%;
+      display: block;
+    }
+
+    .main-image .overlay {
+      position: absolute;
+      top: 20%;
+      left: 10%;
+      color: white;
+    }
+
+    .main-image .overlay h1 {
+      margin: 0;
+    }
+
+    .button {
+      background-color: #000;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .button:hover {
+      background-color: #333;
+    }
+
+    /* Product Grid */
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .grid-item {
+      flex: 1 1 calc(25% - 16px);
+      box-sizing: border-box;
+    }
+
+    .grid-item img {
+      width: 100%;
+      display: block;
+    }
+
+    .grid-item p {
+      text-align: center;
+      margin: 8px 0 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      .grid-item {
+        flex: 1 1 calc(50% - 16px);
+      }
+
+      .sidebar {
+        width: 200px;
+      }
+
+      .main {
+        margin-left: 200px;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .grid-item {
+        flex: 1 1 100%;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .sidebar a {
+        padding: 12px;
+      }
+    }
+
+    /* Subscribe Section */
+    .subscribe-section {
+      background-color: #000;
+      color: white;
+      padding: 32px 16px;
+      text-align: center;
+    }
+
+    .subscribe-section input {
+      padding: 10px;
+      width: 100%;
+      max-width: 400px;
+      margin-bottom: 16px;
+    }
+
+    .subscribe-section button {
+      background-color: red;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .subscribe-section button:hover {
+      background-color: darkred;
+    }
+
+    /* Newsletter Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+      padding-top: 60px;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+      animation: zoom 0.6s;
+    }
+
+    @keyframes zoom {
+      from {transform: scale(0)}
+      to {transform: scale(1)}
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Contact Section */
+    .footer {
+      padding: 64px;
+      background-color: #f1f1f1;
+      font-size: small;
+      text-align: center;
+  }
+  .footer .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+  }
+  .footer .column {
+      flex: 1;
+      min-width: 200px;
+      padding: 16px;
+  }
+  .footer .column h4 {
+      margin-bottom: 16px;
+  }
+  .footer .column input,
+  .footer .column button {
+      width: 100%;
+      border: 1px solid #ccc;
+      padding: 8px;
+      margin-bottom: 8px;
+  }
+  .footer .column button {
+      background-color: #000;
+      color: #fff;
+      padding: 10px;
+      border: none;
+  }
+  .footer .social-icons {
+      margin-top: 16px;
+  }
+  .footer .social-icons i {
+      font-size: 24px;
+      margin-right: 8px;
+  }
+  .footer .powered-by {
+      background-color: #000;
+      color: #fff;
+      padding: 24px;
+      margin-top: 24px;
+  }
+  @media (max-width: 600px) {
+      .footer .row {
+          flex-direction: column;
+      }
+  }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div>
+        <h3>LOGO</h3>
+        <a href="#">Shirts</a>
+        <a href="#">Dresses</a>
+        <a href="#">Jeans</a>
+        <a href="#">Jackets</a>
+        <a href="#">Gymwear</a>
+        <a href="#">Blazers</a>
+        <a href="#">Shoes</a>
+      </div>
+      <!-- Bottom Links -->
+      <div class="bottom-links">
+        <a href="#contact">Contact</a>
+        <a href="#" id="newsletterLink">Newsletter</a>
+        <a href="#subscribe">Subscribe</a> <!-- Updated to navigate to subscribe section -->
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+      <!-- Header -->
+      <header>
+        <p class="left">Jeans</p>
+        <p class="right">
+          <i class="fa fa-shopping-cart"></i>
+          <i class="fa fa-search"></i>
+        </p>
+      </header>
+
+      <!-- Main Image -->
+      <div class="main-image">
+        <img src="img/jeans.png" alt="Main Image">
+        <div class="overlay">
+          <h1>New Arrivals</h1>
+          <p><a href="#collection" class="button">Shop Now</a></p>
+        </div>
+      </div>
+
+      <!-- Collection Grid -->
+      <div id="collection" class="grid">
+        <!-- First Row -->
+        <div class="grid-item">
+          <img src="img/jeans1.png" alt="Ripped Skinny Jeans">
+          <p>Ripped Skinny Jeans<br><b>$24.99</b></p>
+        </div>
+        <div class="grid-item">
+          <img src="img/jeans2.png" alt="Mega Ripped Jeans">
+          <p>Mega Ripped Jeans<br><b>$19.99</b></p>
+        </div>
+        <div class="grid-item">
+          <img src="img/jeans3.png" alt="Washed Skinny Jeans">
+          <p>Washed Skinny Jeans<br><b>$20.50</b></p>
+        </div>
+        <div class="grid-item">
+          <img src="img/jeans4.png" alt="Vintage Skinny Jeans">
+          <p>Vintage Skinny Jeans<br><b class="text-red">$14.99</b></p>
+        </div>
+        
+        <!-- Second Row -->
+        <div class="grid-item">
+          <img src="img/jeans1.png" alt="Classic Blue Jeans">
+          <p>Ripped Skinny Jeans<br><b>$22.99</b></p>
+        </div>
+        <div class="grid-item">
+          <img src="img/jeans2.png" alt="Straight Cut Jeans">
+          <p>Mega Ripped Jeans<br><b>$25.50</b></p>
+        </div>
+        <div class="grid-item">
+          <img src="img/jeans3.png" alt="High Waisted Jeans">
+          <p>Washed Skinny Jeans<br><b>$23.99</b></p>
+        </div>
+        <div class="grid-item">
+          <img src="img/jeans4.png" alt="Boyfriend Jeans">
+          <p>Vintage Skinny Jeans<br><b class="text-red">$18.99</b></p>
+        </div>
+      </div>
+
+      <!-- Subscribe Section -->
+      <div id="subscribe" class="subscribe-section">
+        <h1>Subscribe</h1>
+        <p>To get special offers and VIP treatment:</p>
+        <p><input type="text" placeholder="Enter e-mail"></p>
+        <button type="button">Subscribe</button>
+      </div>
+      <footer class="footer" id="contact">
+        <div class="row">
+            <div class="column">
+                <h4>Contact</h4>
+                <p>Questions? Go ahead.</p>
+                <form action="/action_page.php" target="_blank">
+                    <p><input type="text" placeholder="Name" name="Name" required></p>
+                    <p><input type="text" placeholder="Email" name="Email" required></p>
+                    <p><input type="text" placeholder="Subject" name="Subject" required></p>
+                    <p><input type="text" placeholder="Message" name="Message" required></p>
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+    
+            <div class="column">
+                <h4>About</h4>
+                <p><a href="#">About us</a></p>
+                <p><a href="#">We're hiring</a></p>
+                <p><a href="#">Support</a></p>
+                <p><a href="#">Find store</a></p>
+                <p><a href="#">Shipment</a></p>
+                <p><a href="#">Payment</a></p>
+                <p><a href="#">Gift card</a></p>
+                <p><a href="#">Return</a></p>
+                <p><a href="#">Help</a></p>
+            </div>
+    
+            <div class="column">
+                <h4>Store</h4>
+                <p><i class="fa fa-fw fa-map-marker"></i> Company Name</p>
+                <p><i class="fa fa-fw fa-phone"></i> 0044123123</p>
+                <p><i class="fa fa-fw fa-envelope"></i> ex@mail.com</p>
+                <h4>We accept</h4>
+                <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>
+                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>
+                <div class="social-icons">
+                    <i class="fa fa-facebook-official"></i>
+                    <i class="fa fa-instagram"></i>
+                    <i class="fa fa-snapchat"></i>
+                    <i class="fa fa-pinterest-p"></i>
+                    <i class="fa fa-twitter"></i>
+                    <i class="fa fa-linkedin"></i>
+                </div>
+            </div>
+        </div>
+        <div class="powered-by">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" style="color: #ffffffcc; text-decoration: underline; width:max-content">w3.css</a></div>
+    </footer>
+
+  <!-- Newsletter Modal -->
+  <div id="newsletter" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>NEWSLETTER</h2>
+      <p>Join our mailing list to receive updates on new arrivals and special offers.</p>
+      <p><input type="text" placeholder="Enter e-mail"></p>
+      <button type="button" onclick="closeModal()">Subscribe</button>
+    </div>
+  </div>
+
+  <script>
+    // Open newsletter modal
+    document.getElementById("newsletterLink").onclick = function() {
+      document.getElementById("newsletter").style.display = "block";
+    }
+
+    // Close newsletter modal
+    function closeModal() {
+      document.getElementById("newsletter").style.display = "none";
+    }
+
+    // Navigate to contact section
+    document.getElementById("contactLink").onclick = function() {
+      document.getElementById("contact").scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
+
